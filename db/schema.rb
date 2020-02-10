@@ -10,18 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200210210159) do
+ActiveRecord::Schema.define(version: 20200210221145) do
 
   create_table "shows", force: :cascade do |t|
-    t.string "title"
-    t.string "actors"
-    t.string "directors"
-    t.text   "plot"
-    t.float  "rating"
-    t.string "genre"
-    t.string "network"
-    t.date   "start_date"
-    t.date   "end_date"
+    t.string  "title"
+    t.text    "plot"
+    t.float   "rating"
+    t.string  "genre"
+    t.string  "network"
+    t.integer "runtime"
   end
 
   create_table "users", force: :cascade do |t|

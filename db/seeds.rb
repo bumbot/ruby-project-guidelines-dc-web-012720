@@ -13,11 +13,11 @@ Show.destroy_all
 ann = User.find_or_create_by(fullname: "Ann", username: "annie", password:"hey", country:"USA")
 
 
-response_hash.first(10).map do |shows|
+response_hash.map do |shows|
     show = shows["show"]
-    if show["network"] != nil && show["rating"]["average"] != nil && show["genres"][0] != nil
+    if show["summary"] != nil && show["rating"]["average"] != nil && show["genres"].length > 0 && show["network"] != nil && show["network"]["name"] != nil && show["runtime"] != nil
         #binding.pry
-        Show.find_or_create_by(title: show["name"], actors: "Amy Adams", directors: "Joe", plot: show["summary"], rating: show["rating"]["average"], genre: show["genres"][0], network: show["network"]["name"], start_date: show["premiered"], end_date: nil)
+        Show.find_or_create_by(title: show["name"],plot: show["summary"], rating: show["rating"]["average"], genre: show["genres"][0], network: show["network"]["name"], runtime: show["runtime"])
     end
 end
 

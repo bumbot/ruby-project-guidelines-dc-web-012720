@@ -1,0 +1,85 @@
+"Debtflix"
+
+Base models:
+
+- TVShow
+    - :title
+    - :plot (or synopsis)
+    - :rating (or :reviews)
+    - :genre
+    - :network ("channel")
+    - :runtime
+
+    methods:
+        - #is_still_running?    => returns t/f if show is still airing
+        - .all                  => returns all shows in db
+        - .best_show            => returns show with highest rating
+        - .sort_by_rating       => takes user input of a rating and shows tv shows that are same rating or higher
+
+- UTV   => Join Table
+    - user_id
+    - show_id
+
+- User
+    - :name (first, last)
+    - :username
+    - :password
+    - :country
+    
+    methods:
+        - #favorite_network     => returns user instance's most viewed network
+        - .all                  => returns all users in db (to find user when they "login")
+        - #queue                => lists all the shows that belong to user instance
+        - #login                => checks username: if valid, return welcome message with full name; else ask for login credentials again
+        
+        
+
+
+**maybes**
+- Genre
+    :genre
+
+- GN   => Join Table for TVShow and Genre
+    :show_id
+    :genre_id
+
+
+- Network
+    :net_name
+    :show_id
+
+
+
+
+CLI
+- User able to sort by:
+    - genre
+    - rating
+    - name
+
+1. "Login"
+    1a. create new account                      => find_or_create_by(username: "")
+    1b. require password for returning users    => login()
+2. View list of tv shows by genre, rating, name, network
+    2a. User can search name of specific show
+        - For specific tv shows:
+            - can view plot/synopsis
+            - view actors/directors
+            - view rating(s)
+            - view genre
+    2b. User can see list of shows in genre add to their collection
+        - .push
+    2c. User can see list of shows by certain rating (5.0 or above) and add to their collection
+        - .push
+    2d. User can sort by shows based on network
+        - #favorite_network -- check to see what their fave network is and pull shows from that network for user to view
+3. Watch Show?
+    - if they watch show in their list, .shift show from array of user's shows
+4. "I'm feeling lucky"
+    - suggest/add random show
+5. Terminate account
+    - remove user instance/information from db
+6. How much am I watching?
+    - calculates total runtime of all shows in queue
+
+Seed TV DB with TVMaze API
