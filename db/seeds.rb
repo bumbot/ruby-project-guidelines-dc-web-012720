@@ -10,7 +10,7 @@ response_hash = JSON.parse(response_string)
 User.destroy_all
 Show.destroy_all
 
-ann = User.find_or_create_by(fullname: "Ann", username: "annie", password:"hey", country:"USA")
+ann = User.find_or_create_by(fullname: "Ann", username: "annie", password:"hey", country:"USA", status: true)
 
 
 response_hash.map do |shows|

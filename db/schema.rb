@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200210221145) do
+ActiveRecord::Schema.define(version: 20200210223928) do
 
   create_table "shows", force: :cascade do |t|
     t.string  "title"
@@ -22,10 +22,11 @@ ActiveRecord::Schema.define(version: 20200210221145) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "fullname"
-    t.string "username"
-    t.string "password"
-    t.string "country"
+    t.string  "fullname"
+    t.string  "username"
+    t.string  "password"
+    t.string  "country"
+    t.boolean "status"
   end
 
   create_table "watchlist", force: :cascade do |t|

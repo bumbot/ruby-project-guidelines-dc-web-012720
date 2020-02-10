@@ -25,12 +25,14 @@ Base models:
     - :username
     - :password
     - :country
+    - :status
     
     methods:
         - #favorite_network     => returns user instance's most viewed network
         - .all                  => returns all users in db (to find user when they "login")
         - #queue                => lists all the shows that belong to user instance
         - #login                => checks username: if valid, return welcome message with full name; else ask for login credentials again
+        - #deactivate_account   => sets account status to "false"
         
         
 
@@ -77,8 +79,8 @@ CLI
     - if they watch show in their list, .shift show from array of user's shows
 4. "I'm feeling lucky"
     - suggest/add random show
-5. Terminate account
-    - remove user instance/information from db
+5. Deactivate account
+    - set user status to "false"
 6. How much am I watching?
     - calculates total runtime of all shows in queue
 
