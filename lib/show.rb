@@ -17,5 +17,9 @@ class Show < ActiveRecord::Base
         arr = self.all.select{|show| show.rating >= num}
         arr.map{|show| show.title}
     end
+
+    def self.all_titles
+        self.all.map{|show| show.title}
+    end
     
 end

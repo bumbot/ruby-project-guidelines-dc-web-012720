@@ -1,6 +1,7 @@
 require_relative '../config/environment'
 require 'pry'
 require 'pp'
+require_relative '../db/seeds.rb'
 
 # Creating pseudocode
 
@@ -212,9 +213,19 @@ def show_search(user)   #come back later for genre & network tables
     when 3
         #to be worked on later!!
     when 4
-        puts "Please enter the name of the show that you would like to add:"
+        puts "Please enter a search term for the show that you would like to add:"
+        show = gets.chomp
+        find_show(show)
+        puts "Here is the current list of available shows:"
+        p Show.all_titles
+        # http://api.tvmaze.com/search/shows?q= + show
+        #
+        #
+        #
+        puts "Please enter the name of the show that you would like to watch:"
         show = gets.chomp
         user.add_show(show)
+        puts "Success! Your show is waiting for you in your queue!"
         homepage(user)
     when 5
         homepage(user)
