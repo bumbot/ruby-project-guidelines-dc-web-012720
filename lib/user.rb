@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
 
     def queue
         watchlist = Watchlist.where(user_id: self.id) 
-        p watchlist.map{|show| Show.find_by(id: show.show_id)}
+        watchlist.map{|show| Show.find_by(id: show.show_id).title}
     end
 
     def self.login(usernames, password)

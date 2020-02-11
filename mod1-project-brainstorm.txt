@@ -11,7 +11,6 @@ Base models:
     - :runtime
 
     methods:
-        - #is_still_running?    => returns t/f if show is still airing
         - .all                  => returns all shows in db
         - .best_show            => returns show with highest rating
         - .sort_by_rating       => takes user input of a rating and shows tv shows that are same rating or higher

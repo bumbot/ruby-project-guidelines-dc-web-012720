@@ -14,7 +14,8 @@ class Show < ActiveRecord::Base
     end
 
     def self.sort_by_rating(num)
-        self.all.select{|show| show.rating >= num}
+        arr = self.all.select{|show| show.rating >= num}
+        arr.map{|show| show.title}
     end
     
 end
