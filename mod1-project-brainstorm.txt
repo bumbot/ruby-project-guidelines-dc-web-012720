@@ -11,12 +11,12 @@ Base models:
     - :runtime
 
     methods:
-        - #is_still_running?    => returns t/f if show is still airing
         - .all                  => returns all shows in db
         - .best_show            => returns show with highest rating
         - .sort_by_rating       => takes user input of a rating and shows tv shows that are same rating or higher
+        - 
 
-- UTV   => Join Table
+- Watchlist   => Join Table
     - user_id
     - show_id
 
@@ -33,6 +33,10 @@ Base models:
         - #queue                => lists all the shows that belong to user instance
         - #login                => checks username: if valid, return welcome message with full name; else ask for login credentials again
         - #deactivate_account   => sets account status to "false"
+        - #watch_show           => pick a show to watch and remove it form the queue
+        - #total_runtime        => takes a user's queue and calculates each show's total runtime
+        - #add_show             => adds a show to user queue
+
         
         
 
@@ -69,13 +73,13 @@ CLI
             - view actors/directors
             - view rating(s)
             - view genre
-    2b. User can see list of shows in genre add to their collection
+    2b. User can see list of shows in genre and add to their collection
         - .push
     2c. User can see list of shows by certain rating (5.0 or above) and add to their collection
         - .push
     2d. User can sort by shows based on network
         - #favorite_network -- check to see what their fave network is and pull shows from that network for user to view
-3. Watch Show?
+3. Watch Show
     - if they watch show in their list, .shift show from array of user's shows
 4. "I'm feeling lucky"
     - suggest/add random show
