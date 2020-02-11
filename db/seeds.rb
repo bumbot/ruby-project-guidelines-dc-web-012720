@@ -21,4 +21,8 @@ response_hash.map do |shows|
     end
 end
 
+watch1 = Watchlist.find_or_create_by(user_id: ann.id, show_id: Show.all[0].id)
+watch2 = Watchlist.find_or_create_by(user_id: ann.id, show_id: Show.all[1].id)
+
+
 #Pry.start

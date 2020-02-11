@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200210223928) do
+ActiveRecord::Schema.define(version: 20200211160120) do
 
   create_table "shows", force: :cascade do |t|
     t.string  "title"
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20200210223928) do
     t.boolean "status"
   end
 
-  create_table "watchlist", force: :cascade do |t|
+  create_table "watchlists", force: :cascade do |t|
     t.integer "user_id"
     t.integer "show_id"
   end
