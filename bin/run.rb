@@ -7,15 +7,27 @@ require_relative '../db/seeds.rb'
 
 # Welcome to DebtFlix
 def openingWelcome
-    puts "Welcome to DebtFlix"
-    puts "Press y to continue"
-    input = gets.chomp
-
-    if input.downcase == "y"
-        loginMenu
-    else
-        puts "Goodbye!"
+    puts "\n\nWelcome to DebtFlix\n\n"
+    puts "\nPress \"y\" to continue or type \"exit\" to terminate the program.\n\n\n"
+    print "Input: "
+    input = gets.chomp.downcase.gsub(" ", "")
+    while input != "y" 
+        if input == "exit"
+            return puts "Exiting Program"
+        end
+        puts "\n**************************************************************"
+        puts "An error occured please make sure you type \"y\" or \"exit\" only."
+        puts "**************************************************************\n\n"
+        print "Input: "
+        input = gets.chop.downcase
+        puts "\n"
     end
+    loginMenu
+    # if input.downcase == "y"
+    #     loginMenu
+    # else
+    #     puts "Goodbye!"
+    # end
 end
 
 def check_login
