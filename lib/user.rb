@@ -45,5 +45,23 @@ class User < ActiveRecord::Base
     def activate_account
         self.update(status: true)
     end
+
+    def add_show(show_name)
+        show = Show.where(title: show_name)
+        Watchlist.create(user_id: self.id, show_id: show[0].id)
+    end
+
+    def remove_show(show_name)
+        show = Show.where(title: show_name)
+        watchlist = Watchlist.find_by(user_id: self.id, show_id: show[0].id)
+        Watchlist.delete(watchlist.id)
+    end
+
+    def total_runtime
+        watchlist = Watchlist.where(user_id: self.id)
+        all_shows = watchlist.map{|show| Show.find(show.show_id)}
+
+        all_shows.sum{|show| show.runtime}
+    end
     
 end

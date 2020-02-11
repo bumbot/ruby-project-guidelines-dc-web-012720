@@ -9,6 +9,7 @@ response_hash = JSON.parse(response_string)
 
 User.destroy_all
 Show.destroy_all
+Watchlist.destroy_all
 
 ann = User.find_or_create_by(fullname: "Ann", username: "annie", password:"hey", country:"USA", status: true)
 
@@ -23,6 +24,6 @@ end
 
 watch1 = Watchlist.find_or_create_by(user_id: ann.id, show_id: Show.all[0].id)
 watch2 = Watchlist.find_or_create_by(user_id: ann.id, show_id: Show.all[1].id)
-
+watch3 = Watchlist.find_or_create_by(user_id: ann.id, show_id: Show.all[2].id)
 
 #Pry.start
