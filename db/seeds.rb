@@ -1,6 +1,8 @@
 require "rest-client"
 require "json"
 require 'pry'
+old_logger = ActiveRecord::Base.logger
+ActiveRecord::Base.logger = nil
 
 User.destroy_all
 Show.destroy_all
@@ -20,9 +22,8 @@ def find_show(string="girls")
 
     response_hash.map do |shows|
         show = shows["show"]
-        #deleted show["summary"] for now
-        #show["rating"]["average"] != nil && 
-        if show["genres"].length > 0 && show["network"] != nil && show["network"]["name"] != nil && show["runtime"] != nil
+        
+        if show["rating"]["average"] != nil && show["genres"].length > 0 && show["network"] != nil && show["network"]["name"] != nil && show["runtime"] != nil
             tv_show = Show.find_or_create_by(title: show["name"].downcase, plot: show["summary"], rating: show["rating"]["average"], genre: show["genres"][0].downcase, network: Network.find_or_create_by(name: show["network"]["name"].downcase), runtime: show["runtime"])
             
             tv_genre = Genre.find_or_create_by(genre: tv_show.genre)

@@ -142,9 +142,7 @@ def homepage(user)
             homepage(user)
         end
     when 2
-        print "\nPlease enter a search term for the show that you would like to add: "
-        search_term = gets.chomp.downcase
-        find_show(search_term)
+        populate_show_db
         show_search(user)
     when 3
         watch_show(user)
@@ -224,7 +222,12 @@ def change_status(user)
     end
 end
 
-def show_search(user)   #come back later for genre & network tables
+def show_search(user)
+    if Show.all.empty?
+        puts "\nLooks like there are no shows in your search! Try again!\n\n"
+        return homepage(user)
+    end
+
     puts "Search for show based on: \n\n"
     puts "\t- 1 Rating\n\n"
     puts "\t- 2 Genre\n\n"
@@ -245,6 +248,7 @@ def show_search(user)   #come back later for genre & network tables
 
         if show_list.empty?
             puts "\nLooks like there are no shows with that rating!"
+            populate_show_db
             return show_search(user)
         end
 
@@ -257,6 +261,8 @@ def show_search(user)   #come back later for genre & network tables
         puts "\nSuccess! Your show is waiting for you in your queue!\n\n"
         homepage(user)
     when 2
+        
+
         p Genre.all_genres
         print "\nEnter a genre that you would like to search shows from: "
         input = gets.chomp.downcase
@@ -264,6 +270,7 @@ def show_search(user)   #come back later for genre & network tables
 
         if show_list.empty?
             puts "\nLooks like there are no shows with that genre!\n\n"
+            populate_show_db
             return show_search(user)
         end
 
@@ -283,6 +290,7 @@ def show_search(user)   #come back later for genre & network tables
 
         if show_list.empty?
             puts "\nLooks like there are no shows in that network!\n"
+            populate_show_db
             return show_search(user)
         end
 
@@ -365,6 +373,12 @@ def acc_details(user)
     else
         acc_details(user)
     end
+end
+
+def populate_show_db
+    print "\nPlease enter a search term for the show that you would like to add: "
+    search_term = gets.chomp.downcase
+    find_show(search_term)
 end
 
 
