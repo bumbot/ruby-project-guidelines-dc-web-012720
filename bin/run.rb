@@ -224,7 +224,7 @@ def show_search(user)   #come back later for genre & network tables
     puts "\t- 4 Title"
     puts "\t- 5 Return to Homepage"
     puts
-    p user.queue
+    p "Current Queue: #{user.queue}"
     puts
     case gets.chomp.to_i
 
@@ -233,7 +233,15 @@ def show_search(user)   #come back later for genre & network tables
         rating = gets.chomp.to_f
 
         puts "List of Shows with a rating of #{rating} or higher:"
-        p Show.sort_by_rating(rating)
+        show_list = Show.sort_by_rating(rating)
+
+        if show_list.empty?
+            puts "Looks like there are no shows with that rating!"
+            return show_search(user)
+        end
+
+        p show_list
+
         puts "Please enter the name of the show that you would like to add:"
         show = gets.chomp
         user.add_show(show)
@@ -244,7 +252,14 @@ def show_search(user)   #come back later for genre & network tables
         p Genre.all_genres
         puts "Enter a genre that you would like to search shows from:"
         input = gets.chomp
-        p Show.genre(input)
+        show_list = Show.genre(input)
+
+        if show_list.empty?
+            puts "Looks like there are no shows with that genre!"
+            return show_search(user)
+        end
+
+        p show_list
 
         puts "Please enter the name of the show that you would like to add:"
         show = gets.chomp
@@ -256,7 +271,14 @@ def show_search(user)   #come back later for genre & network tables
         p Network.all_networks
         puts "Enter a network that you would like to search shows from:"
         input = gets.chomp
-        p Show.network(input)
+        show_list = Show.network(input)
+
+        if show_list.empty?
+            puts "Looks like there are no shows in that network!"
+            return show_search(user)
+        end
+
+        p show_list
 
         puts "Please enter the name of the show that you would like to add:"
         show = gets.chomp
