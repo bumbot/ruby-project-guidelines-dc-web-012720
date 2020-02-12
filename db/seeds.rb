@@ -11,7 +11,7 @@ Genre.destroy_all
 ShowGenre.destroy_all
 Network.destroy_all
 
-ann = User.find_or_create_by(fullname: "Ann", username: "annie", password:"hey", country:"USA", status: true)
+ann = User.find_or_create_by(fullname: "Ann", username: "annie", password:"hey", country:"USA", status: false)
 
 def find_show(string="girls")
     search_term = string.gsub(" ", "+")

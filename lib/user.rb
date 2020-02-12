@@ -35,7 +35,11 @@ class User < ActiveRecord::Base
     end
 
     def self.create_account(fullname, username, password, country)
-        User.create(fullname: fullname, username: username, password: password, country: country, status: true)
+        if User.find_by(username: username)
+            puts "This account already exists!"
+        else
+            User.create(fullname: fullname, username: username, password: password, country: country, status: true)
+        end
     end
 
     def deactivate_account

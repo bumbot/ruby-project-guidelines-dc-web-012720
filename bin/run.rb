@@ -79,7 +79,7 @@ def loginMenu
 
     if input == 1
         print "\nPlease enter your username: "
-        usernames = gets.chomp
+        usernames = gets.chomp.downcase
         print "\nPlease enter your password: "
         password = STDIN.noecho(&:gets).chomp
         user = User.login(usernames, password)
@@ -89,6 +89,7 @@ def loginMenu
             sleep 3
             homepage(user)
         else
+            puts ""
             user = check_login
             if user
                 puts "\nSuccess! Redirecting to homepage...\n\n"
@@ -99,10 +100,13 @@ def loginMenu
                 input = gets.chomp
                 if input.downcase == "y"
                     user = acc_creation
-
-                    puts "\nSuccess! Account successfully created!\n\n"
-                    sleep 3
-                    homepage(user)
+                    if user
+                        puts "\nSuccess! Account successfully created!\n\n"
+                        sleep 3
+                        homepage(user)
+                    else
+                        loginMenu
+                    end
                 else
                     puts "\nExiting program...\n\n"
                 end
@@ -110,10 +114,13 @@ def loginMenu
         end
     elsif input == 2
         user = acc_creation
-
-        puts "\nSuccess! Account successfully created!\n\n"
-        sleep 3
-        homepage(user)
+        if user
+            puts "\nSuccess! Account successfully created!\n\n"
+            sleep 3
+            homepage(user)
+        else
+            loginMenu
+        end
     elsif input == 3
         abort "\nExiting program...\n\n"
     else
@@ -122,18 +129,34 @@ def loginMenu
 end 
 
 def homepage(user)
-    puts "\t- 1 Check if my account is active\n\n"
-    puts "\t- 2 Search for show\n\n"
-    puts "\t- 3 Watch a show\n\n"
-    puts "\t- 4 Find a random show\n\n"
-    puts "\t- 5 View account details\n\n"
-    puts "\t- 6 Manage account settings\n\n"
-    puts "\t- 7 Logout\n\n"     #return to loginMenu
-    
-    print "\nInput: "
-    case gets.chomp.to_i
+    if user.status == false
+        puts "We are sorry, this service is only available to paying members. This is Debtflix, after all."
+        puts "If you would like to change your account status, press y/n"
+        input = gets.chomp.downcase
 
-    when 1
+        if input == 'y'
+            change_status(user)
+            sleep 3
+            puts "Congrats! You are now a member! Redirecting..."
+            sleep 2
+            homepage(user)
+        else
+            puts "Securely logging you out"
+            loginMenu
+        end
+    else
+        puts "\t- 1 Check if my account is active\n\n"
+        puts "\t- 2 Search for show\n\n"
+        puts "\t- 3 Watch a show\n\n"
+        puts "\t- 4 Find a random show\n\n"
+        puts "\t- 5 View account details\n\n"
+        puts "\t- 6 Manage account settings\n\n"
+        puts "\t- 7 Logout\n\n"     #return to loginMenu
+    
+        print "\nInput: "
+        case gets.chomp.to_i
+
+        when 1
         puts "\nYour current account status is #{user.status}.\n\n"
         print "\nWould you like to activate/deactivate your account?: y/n: "
         answer = gets.chomp.downcase
@@ -145,13 +168,13 @@ def homepage(user)
         else
             homepage(user)
         end
-    when 2
+        when 2
         populate_show_db
         show_search(user)
-    when 3
+        when 3
         watch_show(user)
         homepage(user)
-    when 4
+        when 4
         rand_show = Show.new(title: "")
         
         while !(user.queue.include?(rand_show.title))
@@ -166,9 +189,9 @@ def homepage(user)
         end
 
         homepage(user)
-    when 5
+        when 5
         acc_details(user)
-    when 6
+        when 6
         # 1 change username
         # 2 change password
         puts "\t- 1 Change username\n\n"
@@ -198,11 +221,12 @@ def homepage(user)
         else
             homepage(user)
         end
-    when 7
+        when 7
         puts "\nUntil next time!\n\n"
         openingWelcome
-    else
+        else
         homepage(user)
+        end
     end
 end
 
@@ -215,7 +239,12 @@ def acc_creation
     password = gets.chomp
     print "\nPlease enter your country of residence: "
     country = gets.chomp
-    user = User.create_account(fullname, username, password, country)
+    user = User.new(fullname: fullname, username: username, password: password, country: country, status: true)
+    if User.exists?(username: user.username)
+        puts "This account already exists!"
+    else
+        User.create_account(fullname, username, password, country)
+    end
 end
 
 def change_status(user)
