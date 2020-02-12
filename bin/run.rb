@@ -22,6 +22,7 @@ def openingWelcome
         input = gets.chop.downcase
         puts "\n"
     end
+    puts "\n\n"
     loginMenu
     # if input.downcase == "y"
     #     loginMenu
@@ -47,20 +48,21 @@ def check_login
         i += 1
     end
     return false
-
 end
 
 def loginMenu
-    puts "Please make a selection on the following:"
-    puts "\t- 1 Log-in"
-    puts "\t- 2 Create Account"
-    puts "\t- 3 Exit Menu"
-    input = gets.chomp.to_i
+    puts "Please make a selection on the following:\n\n"
+    puts "\t- 1 Log-in\n\n"
+    puts "\t- 2 Create Account\n\n"
+    puts "\t- 3 Exit Menu\n\n"
+
+    print "Input: "
+    input = gets.chomp.gsub(" ","").to_i
 
     if input == 1
-        puts "Please enter your username"
+        print "\n\nPlease enter your username: "
         usernames = gets.chomp
-        puts "Please enter your password"
+        puts "\n\nPlease enter your password: "
         password = gets.chomp
         user = User.login(usernames, password)
 
