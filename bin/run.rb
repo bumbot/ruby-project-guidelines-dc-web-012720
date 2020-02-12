@@ -86,11 +86,13 @@ def loginMenu
 
         if user
             puts "\nSuccess! Redirecting to homepage...\n\n"
+            sleep 3
             homepage(user)
         else
             user = check_login
             if user
                 puts "\nSuccess! Redirecting to homepage...\n\n"
+                sleep 3
                 homepage(user)
             else
                 print "\nWould you like to create an account? y/n: "
@@ -99,6 +101,7 @@ def loginMenu
                     user = acc_creation
 
                     puts "\nSuccess! Account successfully created!\n\n"
+                    sleep 3
                     homepage(user)
                 else
                     puts "\nExiting program...\n\n"
@@ -109,6 +112,7 @@ def loginMenu
         user = acc_creation
 
         puts "\nSuccess! Account successfully created!\n\n"
+        sleep 3
         homepage(user)
     elsif input == 3
         abort "\nExiting program...\n\n"
