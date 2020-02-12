@@ -31,7 +31,7 @@ def openingWelcome
     input = gets.chomp.downcase.gsub(" ", "")
     while input != "y" 
         if input == "exit"
-            return puts "Exiting Program"
+            abort "Exiting Program"
         end
         puts "\n**************************************************************"
         puts "An error occured please make sure you type \"y\" or \"exit\" only."
@@ -109,8 +109,7 @@ def loginMenu
         puts "Success! Account successfully created"
         homepage(user)
     elsif input == 3
-        puts "Exiting program..."
-        return
+        abort "Exiting program..."
     else
         loginMenu
     end
@@ -191,7 +190,7 @@ def homepage(user)
         end
     when 7
         puts "Until next time!"
-        loginMenu
+        openingWelcome
     else
         homepage(user)
     end
@@ -286,7 +285,7 @@ end
 def watch_show(user)
     if user.queue.empty?
         puts "Your queue is empty! Search for shows to add first!"
-        break
+        homepage(user)
     end
 
     puts "List of all shows in your queue"
