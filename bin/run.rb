@@ -38,7 +38,7 @@ def openingWelcome
         puts "**************************************************************\n\n"
         print "Input: "
         input = gets.chop.downcase
-        puts "\n"
+        puts "\n\n"
     end
     loginMenu
     # if input.downcase == "y"
@@ -51,11 +51,11 @@ end
 def check_login
     i = 0
     while i < 3
-        puts "Please try again!"
+        puts "\nPlease try again!\n\n"
 
-        puts "Please enter your username"
+        print "\nPlease enter your username: "
         usernames = gets.chomp
-        puts "Please enter your password"
+        print "\nPlease enter your password: "
         password = gets.chomp
 
         user = User.login(usernames, password)
@@ -69,77 +69,80 @@ def check_login
 end
 
 def loginMenu
-    puts "Please make a selection on the following:"
-    puts "\t- 1 Log-in"
-    puts "\t- 2 Create Account"
-    puts "\t- 3 Exit Menu"
+    puts "\n\nPlease make a selection on the following:\n\n"
+    puts "\t- 1 Log-in\n\n"
+    puts "\t- 2 Create Account\n\n"
+    puts "\t- 3 Exit Menu\n\n"
+    print "Input: "
     input = gets.chomp.to_i
 
     if input == 1
-        puts "Please enter your username"
+        print "\n\nPlease enter your username: "
         usernames = gets.chomp
-        puts "Please enter your password"
+        print "\n\nPlease enter your password: "
         password = gets.chomp
+        puts "\n"
         user = User.login(usernames, password)
 
         if user
-            puts "Success! Redirecting to homepage..."
+            puts "\nSuccess! Redirecting to homepage...\n\n"
             homepage(user)
         else
             user = check_login
             if user
-                puts "Success! Redirecting to homepage..."
+                puts "\nSuccess! Redirecting to homepage...\n\n"
                 homepage(user)
             else
-                puts "Would you like to create an account? y/n"
+                print "\nWould you like to create an account? y/n:"
                 input = gets.chomp
                 if input.downcase == "y"
                     user = acc_creation
 
-                    puts "Success! Account successfully created"
+                    puts "\nSuccess! Account successfully created!\n"
                     homepage(user)
                 else
-                    puts "Exiting program..."
+                    puts "\nExiting program...\n\n"
                 end
             end
         end
     elsif input == 2
         user = acc_creation
 
-        puts "Success! Account successfully created"
+        puts "\nSuccess! Account successfully created\n\n"
         homepage(user)
     elsif input == 3
-        abort "Exiting program..."
+        abort "\nExiting program...\n\n"
     else
         loginMenu
     end
 end 
 
 def homepage(user)
-    puts "\t- 1 Check if my account is active"
-    puts "\t- 2 Search for show"
-    puts "\t- 3 Watch a show"
-    puts "\t- 4 Find a random show"
-    puts "\t- 5 View account details"
-    puts "\t- 6 Manage account settings"
-    puts "\t- 7 Logout"     #return to loginMenu
+    puts "\t- 1 Check if my account is active\n\n"
+    puts "\t- 2 Search for show\n\n"
+    puts "\t- 3 Watch a show\n\n"
+    puts "\t- 4 Find a random show\n\n"
+    puts "\t- 5 View account details\n\n"
+    puts "\t- 6 Manage account settings\n\n"
+    puts "\t- 7 Logout\n\n"     #return to loginMenu
     
+    print "\nInput: "
     case gets.chomp.to_i
 
     when 1
-        puts "Your current account status is #{user.status}"
-        puts "Would you like to activate/deactivate your account?: y/n"
+        puts "\nYour current account status is #{user.status}\n\n"
+        print "\nWould you like to activate/deactivate your account?: y/n: "
         answer = gets.chomp.downcase
 
         if answer == "y"
             change_status(user)
-            puts "Your account status has been successfully updated"
+            puts "\nYour account status has been successfully updated\n\n"
             homepage(user)
         else
             homepage(user)
         end
     when 2
-        puts "Please enter a search term for the show that you would like to add:"
+        print "\nPlease enter a search term for the show that you would like to add: "
         search_term = gets.chomp
         find_show(search_term)
         show_search(user)
@@ -154,7 +157,7 @@ def homepage(user)
             rand_show = Show.all[rand_show_index]
             
             if !(user.queue.include?(rand_show.title))
-                puts "Your next exciting show will be #{rand_show.title}"
+                puts "\nYour next exciting show will be #{rand_show.title}\n\n"
                 user.add_show(rand_show.title)
                 break
             end
@@ -166,30 +169,30 @@ def homepage(user)
     when 6
         # 1 change username
         # 2 change password
-        puts "\t- 1 Change username"
-        puts "\t- 2 Change password"
-        puts "\t- 3 Return to homepage"
+        puts "\t- 1 Change username\n\n"
+        puts "\t- 2 Change password\n\n"
+        puts "\t- 3 Return to homepage\n\n"
         case gets.chomp.to_i
 
         when 1
-            puts "Enter a new username: "
+            print "\nEnter a new username: "
             username = gets.chomp
 
             User.find_by(id: user.id).update(username: username)
-            puts "Success! Your new username is #{User.find(user.id).username}"
+            puts "\nSuccess! Your new username is #{User.find(user.id).username}\n\n"
             homepage(user)
         when 2
-            puts "Enter a new password: "
+            print "\nEnter a new password: "
             password = gets.chomp
 
             User.find_by(id: user.id).update(password: password)
-            puts "Success! Your new password is #{User.find(user.id).password}"
+            puts "\nSuccess! Your new password is #{User.find(user.id).password}\n\n"
             homepage(user)
         else
             homepage(user)
         end
     when 7
-        puts "Until next time!"
+        puts "\nUntil next time!\n\n"
         openingWelcome
     else
         homepage(user)
@@ -197,14 +200,15 @@ def homepage(user)
 end
 
 def acc_creation
-    puts "Please enter your full name: "
+    print "\nPlease enter your full name: "
     fullname = gets.chomp
-    puts "Please enter a unique username: "
+    print "\nPlease enter a unique username: "
     username = gets.chomp
-    puts "Please enter a password:"
+    print "\nPlease enter a password: "
     password = gets.chomp
-    puts "Please enter your country of residence"
+    print "\nPlease enter your country of residence: "
     country = gets.chomp
+    puts "\n"
     user = User.create_account(fullname, username, password, country)
 end
 
@@ -217,89 +221,88 @@ def change_status(user)
 end
 
 def show_search(user)   #come back later for genre & network tables
-    puts "Search for show based on: "
-    puts "\t- 1 Rating"
-    puts "\t- 2 Genre"
-    puts "\t- 3 Network"
-    puts "\t- 4 Title"
-    puts "\t- 5 Return to Homepage"
-    puts
+    puts "\nSearch for show based on: "
+    puts "\t- 1 Rating\n\n"
+    puts "\t- 2 Genre\n\n"
+    puts "\t- 3 Network\n\n"
+    puts "\t- 4 Title\n\n"
+    puts "\t- 5 Return to Homepage\n\n"
     p user.queue
-    puts
+    print "\nInput: "
     case gets.chomp.to_i
 
     when 1
-        puts "Enter a rating between 0-10"
+        print "\nEnter a rating between 0-10: "
         rating = gets.chomp.to_f
 
-        puts "List of Shows with a rating of #{rating} or higher:"
+        print "\nList of Shows with a rating of #{rating} or higher: "
         p Show.sort_by_rating(rating)
-        puts "Please enter the name of the show that you would like to add:"
+        print "\nPlease enter the name of the show that you would like to add: "
         show = gets.chomp
         user.add_show(show)
 
-        puts "Success! Your show is waiting for you in your queue!"
+        puts "\nSuccess! Your show is waiting for you in your queue!\n\n"
         homepage(user)
     when 2
         p Genre.all_genres
-        puts "Enter a genre that you would like to search shows from:"
+        print "\nEnter a genre that you would like to search shows from: "
         input = gets.chomp
         p Show.genre(input)
 
-        puts "Please enter the name of the show that you would like to add:"
+        print "\nPlease enter the name of the show that you would like to add: "
         show = gets.chomp
         user.add_show(show)
 
-        puts "Success! Your show is waiting for you in your queue!"
+        puts "\nSuccess! Your show is waiting for you in your queue!\n\n"
         homepage(user)
     when 3
         p Network.all_networks
-        puts "Enter a network that you would like to search shows from:"
+        print "\nEnter a network that you would like to search shows from: "
         input = gets.chomp
         p Show.network(input)
 
-        puts "Please enter the name of the show that you would like to add:"
+        print "\nPlease enter the name of the show that you would like to add: "
         show = gets.chomp
         user.add_show(show)
 
-        puts "Success! Your show is waiting for you in your queue!"
+        puts "\nSuccess! Your show is waiting for you in your queue!\n\n"
         homepage(user)
     when 4
-        puts "Here is the current list of available shows:"
+        print "\nHere is the current list of available shows: "
         p Show.all_titles
 
-        puts "Please enter the name of the show that you would like to watch:"
+        print "\nPlease enter the name of the show that you would like to watch: "
         show = gets.chomp
         user.add_show(show)
 
-        puts "Success! Your show is waiting for you in your queue!"
+        puts "\nSuccess! Your show is waiting for you in your queue!\n"
         homepage(user)
     when 5
         homepage(user)
     else
-        puts "Try again"
+        puts "\nTry again!\n\n"
         show_search(user)
     end
 end
 
 def watch_show(user)
     if user.queue.empty?
-        puts "Your queue is empty! Search for shows to add first!"
+        puts "\nYour queue is empty! Search for shows to add first!\n\n"
         homepage(user)
     end
 
-    puts "List of all shows in your queue"
+    print "\nList of all shows in your queue: "
     pp user.queue
 
-    puts "What show would you like to watch?"
+    print "\nWhat show would you like to watch?: "
     input = gets.chomp
 
     if user.queue.include?(input)
-        puts "Enjoy your show! Grabbing some popcorn..."
+        puts "\nEnjoy your show! Grabbing some popcorn...\n\n"
         user.remove_show(input)
         homepage(user)
     else
-        puts "Looks like that show isn't on your queue!"
+        puts "\nLooks like that show isn't on your queue!\n\n"
         homepage(user)
     end
 
@@ -312,18 +315,18 @@ def acc_details(user)
         # 2 view watch time
         # 3 view size of queue
 
-    puts "Account Details:"
-    puts "\t- 1 View current queue runtime"
-    puts "\t- 2 View size of current queue"
-    puts "\t- 3 Return to Homepage"
-
+    puts "Account Details:\n\n"
+    puts "\t- 1 View current queue runtime\n\n"
+    puts "\t- 2 View size of current queue\n\n"
+    puts "\t- 3 Return to Homepage\n\n"
+    print "\nInput: "
     case gets.chomp.to_i
 
     when 1
-        puts "Wow, looks like you're about to waste #{user.total_runtime} minutes! Nice job!"
+        puts "\nWow, looks like you're about to waste #{user.total_runtime} minutes! Nice job!\n\n"
         acc_details(user)
     when 2
-        puts "Your current queue size is #{user.queue.length}."
+        puts "\nYour current queue size is #{user.queue.length}.\n\n"
         acc_details(user)
     when 3
         homepage(user)

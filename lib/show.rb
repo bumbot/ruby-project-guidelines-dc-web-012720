@@ -5,7 +5,6 @@ class Show < ActiveRecord::Base
     has_many :genres, through: :showgenre
     belongs_to :network
 
-
     def self.best_show
         initialShow = self.all[0]
         r = initialShow.rating

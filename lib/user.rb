@@ -26,10 +26,10 @@ class User < ActiveRecord::Base
         if User.find_by(username: usernames)
             user = User.find_by(username: usernames)
             if password == user.password
-                puts "Login Successful"
+                puts "\nLogin Successful\n\n"
                 return user
             else 
-                puts "Incorrect Password"
+                puts "\nIncorrect Password!\n\n"
             end
         end
     end
