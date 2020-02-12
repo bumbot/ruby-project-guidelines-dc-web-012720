@@ -1,5 +1,7 @@
 class Show < ActiveRecord::Base
     has_many :users, through: :watchlist
+    has_many :genres, through: :showgenre
+    belongs_to :network
 
 
     def self.best_show
