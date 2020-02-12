@@ -21,8 +21,9 @@ def find_show(string="girls")
     response_hash.map do |shows|
         show = shows["show"]
         #deleted show["summary"] for now
-        if show["rating"]["average"] != nil && show["genres"].length > 0 && show["network"] != nil && show["network"]["name"] != nil && show["runtime"] != nil
-            tv_show = Show.find_or_create_by(title: show["name"], plot: nil, rating: show["rating"]["average"], genre: show["genres"][0], network: Network.find_or_create_by(name: show["network"]["name"]), runtime: show["runtime"])
+        #show["rating"]["average"] != nil && 
+        if show["genres"].length > 0 && show["network"] != nil && show["network"]["name"] != nil && show["runtime"] != nil
+            tv_show = Show.find_or_create_by(title: show["name"].downcase, plot: show["summary"], rating: show["rating"]["average"], genre: show["genres"][0].downcase, network: Network.find_or_create_by(name: show["network"]["name"].downcase), runtime: show["runtime"])
             
             tv_genre = Genre.find_or_create_by(genre: tv_show.genre)
             ShowGenre.create(show_id: tv_show.id, genre_id: tv_genre.id)

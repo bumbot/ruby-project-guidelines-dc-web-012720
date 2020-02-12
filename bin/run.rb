@@ -140,7 +140,7 @@ def homepage(user)
         end
     when 2
         puts "Please enter a search term for the show that you would like to add:"
-        search_term = gets.chomp
+        search_term = gets.chomp.downcase
         find_show(search_term)
         show_search(user)
     when 3
@@ -240,10 +240,10 @@ def show_search(user)   #come back later for genre & network tables
             return show_search(user)
         end
 
-        p show_list
+        p show_list)
 
         puts "Please enter the name of the show that you would like to add:"
-        show = gets.chomp
+        show = gets.chomp.downcase
         user.add_show(show)
 
         puts "Success! Your show is waiting for you in your queue!"
@@ -251,7 +251,7 @@ def show_search(user)   #come back later for genre & network tables
     when 2
         p Genre.all_genres
         puts "Enter a genre that you would like to search shows from:"
-        input = gets.chomp
+        input = gets.chomp.downcase
         show_list = Show.genre(input)
 
         if show_list.empty?
@@ -262,7 +262,7 @@ def show_search(user)   #come back later for genre & network tables
         p show_list
 
         puts "Please enter the name of the show that you would like to add:"
-        show = gets.chomp
+        show = gets.chomp.downcase
         user.add_show(show)
 
         puts "Success! Your show is waiting for you in your queue!"
@@ -270,7 +270,7 @@ def show_search(user)   #come back later for genre & network tables
     when 3
         p Network.all_networks
         puts "Enter a network that you would like to search shows from:"
-        input = gets.chomp
+        input = gets.chomp.downcase
         show_list = Show.network(input)
 
         if show_list.empty?
@@ -281,7 +281,7 @@ def show_search(user)   #come back later for genre & network tables
         p show_list
 
         puts "Please enter the name of the show that you would like to add:"
-        show = gets.chomp
+        show = gets.chomp.downcase
         user.add_show(show)
 
         puts "Success! Your show is waiting for you in your queue!"
@@ -291,7 +291,7 @@ def show_search(user)   #come back later for genre & network tables
         p Show.all_titles
 
         puts "Please enter the name of the show that you would like to watch:"
-        show = gets.chomp
+        show = gets.chomp.downcase
         user.add_show(show)
 
         puts "Success! Your show is waiting for you in your queue!"
@@ -314,7 +314,7 @@ def watch_show(user)
     pp user.queue
 
     puts "What show would you like to watch?"
-    input = gets.chomp
+    input = gets.chomp.downcase
 
     if user.queue.include?(input)
         puts "Enjoy your show! Grabbing some popcorn..."
