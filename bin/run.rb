@@ -313,6 +313,10 @@ def acc_details(user)
         # 3 view size of queue
 
     puts "Account Details:"
+    puts "  Name: #{user.fullname}"
+    puts "  Username: #{user.username}"
+    puts "  Country: #{user.country}"
+    puts "  Account Status: #{user.status}"
     puts "\t- 1 View current queue runtime"
     puts "\t- 2 View size of current queue"
     puts "\t- 3 Return to Homepage"
