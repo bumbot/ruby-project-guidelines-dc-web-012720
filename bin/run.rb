@@ -110,6 +110,7 @@ def loginMenu
         homepage(user)
     elsif input == 3
         puts "Exiting program..."
+        return
     else
         loginMenu
     end
@@ -139,15 +140,15 @@ def homepage(user)
             homepage(user)
         end
     when 2
+        puts "Please enter a search term for the show that you would like to add:"
+        search_term = gets.chomp
+        find_show(search_term)
         show_search(user)
     when 3
         watch_show(user)
+        homepage(user)
     when 4
         rand_show = Show.new(title: "")
-
-        # if !user_queue.include?(rand_show.title)
-        #     user.add_show(rand_show.title)
-        # else
         
         while !(user.queue.include?(rand_show.title))
             rand_show_index = rand(Show.all.length)
@@ -237,24 +238,41 @@ def show_search(user)   #come back later for genre & network tables
         puts "Please enter the name of the show that you would like to add:"
         show = gets.chomp
         user.add_show(show)
+
+        puts "Success! Your show is waiting for you in your queue!"
         homepage(user)
     when 2
-        #to be worked on later!!
-    when 3
-        #to be worked on later!!
-    when 4
-        puts "Please enter a search term for the show that you would like to add:"
+        p Genre.all_genres
+        puts "Enter a genre that you would like to search shows from:"
+        input = gets.chomp
+        p Show.genre(input)
+
+        puts "Please enter the name of the show that you would like to add:"
         show = gets.chomp
-        find_show(show)
+        user.add_show(show)
+
+        puts "Success! Your show is waiting for you in your queue!"
+        homepage(user)
+    when 3
+        p Network.all_networks
+        puts "Enter a network that you would like to search shows from:"
+        input = gets.chomp
+        p Show.network(input)
+
+        puts "Please enter the name of the show that you would like to add:"
+        show = gets.chomp
+        user.add_show(show)
+
+        puts "Success! Your show is waiting for you in your queue!"
+        homepage(user)
+    when 4
         puts "Here is the current list of available shows:"
         p Show.all_titles
-        # http://api.tvmaze.com/search/shows?q= + show
-        #
-        #
-        #
+
         puts "Please enter the name of the show that you would like to watch:"
         show = gets.chomp
         user.add_show(show)
+
         puts "Success! Your show is waiting for you in your queue!"
         homepage(user)
     when 5
@@ -266,6 +284,11 @@ def show_search(user)   #come back later for genre & network tables
 end
 
 def watch_show(user)
+    if user.queue.empty?
+        puts "Your queue is empty! Search for shows to add first!"
+        break
+    end
+
     puts "List of all shows in your queue"
     pp user.queue
 

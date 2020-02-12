@@ -1,3 +1,5 @@
+require 'pry'
+
 class Show < ActiveRecord::Base
     has_many :users, through: :watchlist
     has_many :genres, through: :showgenre
@@ -22,6 +24,19 @@ class Show < ActiveRecord::Base
 
     def self.all_titles
         self.all.map{|show| show.title}
+    end
+
+    def self.genre(name)
+        genre_name = Genre.find_by(genre: name)
+        join = ShowGenre.all.select{|obj| obj.genre_id == genre_name.id}
+        
+        join.map{|id| Show.find(id.show_id).title}
+    end
+
+    def self.network(name)
+        network = Network.find_by(name: name)
+        shows = Show.all.select{|show| show.network_id == network.id}
+        shows.map{|show| show.title}
     end
     
 end
