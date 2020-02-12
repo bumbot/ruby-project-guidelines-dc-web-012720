@@ -3,12 +3,16 @@ require 'pry'
 require 'pp'
 require_relative '../db/seeds.rb'
 require 'io/console'
+require 'artii'
 
 # Creating pseudocode
 
 # Welcome to DebtFlix
 def openingWelcome
     puts "\n\nWelcome to DebtFlix\n\n"
+
+    a = Artii::Base.new
+    puts a.asciify('Debtflix!')
 
     puts " ________        _________     ________    ________________   "
     puts "|         \\     |   ______|   |   __   \\  |_____     ______|  "
