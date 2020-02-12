@@ -2,6 +2,7 @@ require_relative '../config/environment'
 require 'pry'
 require 'pp'
 require_relative '../db/seeds.rb'
+require 'io/console'
 
 # Creating pseudocode
 
@@ -80,7 +81,7 @@ def loginMenu
         print "\nPlease enter your username: "
         usernames = gets.chomp
         print "\nPlease enter your password: "
-        password = gets.chomp
+        password = STDIN.noecho(&:gets).chomp
         user = User.login(usernames, password)
 
         if user
@@ -183,6 +184,9 @@ def homepage(user)
             puts "\nSuccess! Your new username is #{User.find(user.id).username}!\n\n"
             homepage(user)
         when 2
+            print "\nEnter your current password: "
+            password = STDIN.noecho(&:gets).chomp
+
             print "\nEnter a new password: "
             password = gets.chomp
 
@@ -340,7 +344,7 @@ def acc_details(user)
 
     puts "Account Details:\n\n"
     puts "  Name: #{user.fullname}\n\n"
-    puts "  Username: #{user.username}\\n\n"
+    puts "  Username: #{user.username}\n\n"
     puts "  Country: #{user.country}\n\n"
     puts "  Account Status: #{user.status}\n\n"
     puts "\t- 1 View current queue runtime\n\n"
