@@ -248,12 +248,15 @@ def homepage(user)
                 print "\nEnter a new username: "
                 username = gets.chomp
 
-                User.find_by(id: user.id).update(username: username)
+                someone = User.find_by(id: user.id)
+                someone.username = username
+                someone.save
+                binding.pry
                 puts "\nSuccess! Your new username is #{User.find(user.id).username}!\n\n"
                 sleep 3
 
                 puts "\e[H\e[2J"
-                homepage(user)
+                homepage(someone)
             when 2
                 print "\nEnter your current password: "
                 password = STDIN.noecho(&:gets).chomp

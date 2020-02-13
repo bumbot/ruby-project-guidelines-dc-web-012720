@@ -6,7 +6,7 @@ ActiveRecord::Base.logger = nil
 
 User.destroy_all
 # Show.destroy_all
-# Watchlist.destroy_all
+Watchlist.destroy_all
 # Genre.destroy_all
 # ShowGenre.destroy_all
 # Network.destroy_all
