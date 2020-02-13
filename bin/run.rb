@@ -126,8 +126,10 @@ def loginMenu
             loginMenu
         end
     elsif input == 3
-        abort "\nExiting program...\n\n"
+        openingWelcome
+        # abort "\nExiting program...\n\n"
     else
+        puts "\nPlease enter a valid input."
         loginMenu
     end
 end 

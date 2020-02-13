@@ -22,6 +22,17 @@ def find_show(string="girls")
 
     response_hash.map do |shows|
         show = shows["show"]
+
+        # trying to add shows where network == nil but show has a webChannel to use that
+        if show["network"] == nil && show["webChannel"]["name"] != nil && show["rating"]["average"] != nil && show["genres"].length > 0 && show["runtime"] != nil
+            puts "it hit me #{show["webChannel"]["name"]}"
+            tv_show = Show.find_or_create_by(title: show["name"].downcase, plot: show["summary"], rating: show["rating"]["average"], genre: show["genres"][0].downcase, network: Network.find_or_create_by(name: show["webChannel"]["name"].downcase), runtime: show["runtime"])
+            
+            tv_genre = Genre.find_or_create_by(genre: tv_show.genre)
+            ShowGenre.create(show_id: tv_show.id, genre_id: tv_genre.id)
+
+            tv_show
+         end
         
         if show["rating"]["average"] != nil && show["genres"].length > 0 && show["network"] != nil && show["network"]["name"] != nil && show["runtime"] != nil
             tv_show = Show.find_or_create_by(title: show["name"].downcase, plot: show["summary"], rating: show["rating"]["average"], genre: show["genres"][0].downcase, network: Network.find_or_create_by(name: show["network"]["name"].downcase), runtime: show["runtime"])
