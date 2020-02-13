@@ -177,6 +177,7 @@ def homepage(user)
         show_search(user)
         when 3
         watch_show(user)
+        
         homepage(user)
         when 4
         rand_show = Show.new(title: "")
