@@ -8,3 +8,6 @@ gem "require_all"
 gem "rest-client"
 gem "json"
 gem 'artii', '~> 2.1', '>= 2.1.2'
+gem 'catpix'
+gem 'rmagick'
+gem 'faker'
