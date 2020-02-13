@@ -402,6 +402,7 @@ def watch_show(user)
     if user.queue.include?(input)
         puts "\nEnjoy your show! Grabbing some popcorn...\n\n"
         user.remove_show(input)
+        watch_movie
         homepage(user)
     else
         puts "\nLooks like that show isn't on your queue!\n\n"
