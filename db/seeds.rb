@@ -27,7 +27,7 @@ def find_show(string="girls")
             tv_show = Show.find_or_create_by(title: show["name"].downcase, plot: show["summary"], rating: show["rating"]["average"], genre: show["genres"][0].downcase, network: Network.find_or_create_by(name: show["network"]["name"].downcase), runtime: show["runtime"])
             
             tv_genre = Genre.find_or_create_by(genre: tv_show.genre)
-            ShowGenre.create(show_id: tv_show.id, genre_id: tv_genre.id)
+            ShowGenre.find_or_create_by(show_id: tv_show.id, genre_id: tv_genre.id)
 
             tv_show
         end

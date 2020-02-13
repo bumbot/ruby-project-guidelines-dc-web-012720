@@ -29,20 +29,20 @@ def food_description
 end
 
 def movie_quote
-  [Faker::Movies::StarWars.unique.quote,
-  Faker::Movies::StarWars.unique.quote,
-  Faker::Movies::StarWars.unique.wookiee_sentence,
-  Faker::Movies::StarWars.unique.wookiee_sentence,
-  Faker::Movies::BackToTheFuture.unique.quote,
-  Faker::Movies::BackToTheFuture.unique.quote,
-  Faker::Movies::HarryPotter.unique.quote,
-  Faker::Movies::HarryPotter.unique.quote,
-  Faker::Movies::Hobbit.unique.quote,
-  Faker::Movies::Hobbit.unique.quote,
-  Faker::Movies::LordOfTheRings.unique.quote,
-  Faker::Movies::LordOfTheRings.unique.quote,
-  Faker::Movies::PrincessBride.unique.quote,
-  Faker::Movies::PrincessBride.unique.quote].sample
+  [Faker::Movies::StarWars.quote,
+  Faker::Movies::StarWars.quote,
+  Faker::Movies::StarWars.wookiee_sentence,
+  Faker::Movies::StarWars.wookiee_sentence,
+  Faker::Movies::BackToTheFuture.quote,
+  Faker::Movies::BackToTheFuture.quote,
+  Faker::Movies::HarryPotter.quote,
+  Faker::Movies::HarryPotter.quote,
+  Faker::Movies::Hobbit.quote,
+  Faker::Movies::Hobbit.quote,
+  Faker::Movies::LordOfTheRings.quote,
+  Faker::Movies::LordOfTheRings.quote,
+  Faker::Movies::PrincessBride.quote,
+  Faker::Movies::PrincessBride.quote].sample
 end
 
 def random_description

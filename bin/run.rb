@@ -120,7 +120,7 @@ def loginMenu
     elsif input == 2
         user = acc_creation
         if user
-            puts "\nSuccess! Account successfully created!\n\n"
+            puts "\nSuccess! Account successfully created! Redirecting...\n\n"
             sleep 3
             homepage(user)
         else
@@ -147,6 +147,7 @@ def homepage(user)
             homepage(user)
         else
             puts "\nSecurely logging you out\n"
+            sleep 2
             loginMenu
         end
     else
@@ -162,76 +163,78 @@ def homepage(user)
         case gets.chomp.to_i
 
         when 1
-        puts "\nYour current account status is #{user.status}.\n\n"
-        print "\nWould you like to activate/deactivate your account?: y/n: "
-        answer = gets.chomp.downcase
+            puts "\nYour current account status is #{user.status}.\n\n"
+            print "\nWould you like to activate/deactivate your account?: y/n: "
+            answer = gets.chomp.downcase
 
-        if answer == "y"
-            change_status(user)
-            puts "\nYour account status has been successfully updated!\n\n"
-            homepage(user)
-        else
-            homepage(user)
-        end
-        when 2
-        populate_show_db
-        show_search(user)
-        when 3
-        watch_show(user)
-        
-        homepage(user)
-        when 4
-        rand_show = Show.new(title: "")
-        
-        while !(user.queue.include?(rand_show.title))
-            rand_show_index = rand(Show.all.length)
-            rand_show = Show.all[rand_show_index]
-            
-            if !(user.queue.include?(rand_show.title))
-                puts "\nYour next exciting show will be #{rand_show.title}!\n\n"
-                user.add_show(rand_show.title)
-                break
+            if answer == "y"
+                change_status(user)
+                puts "\nYour account status has been successfully updated!\n\n"
+                homepage(user)
+            else
+                homepage(user)
             end
-        end
-
-        homepage(user)
-        when 5
-        acc_details(user)
-        when 6
-        # 1 change username
-        # 2 change password
-        puts "\t- 1 Change username\n\n"
-        puts "\t- 2 Change password\n\n"
-        puts "\t- 3 Return to homepage\n\n"
-
-        print "\nInput: "
-        case gets.chomp.to_i
-
-        when 1
-            print "\nEnter a new username: "
-            username = gets.chomp
-
-            User.find_by(id: user.id).update(username: username)
-            puts "\nSuccess! Your new username is #{User.find(user.id).username}!\n\n"
-            homepage(user)
         when 2
-            print "\nEnter your current password: "
-            password = STDIN.noecho(&:gets).chomp
-
-            print "\nEnter a new password: "
-            password = gets.chomp
-
-            User.find_by(id: user.id).update(password: password)
-            puts "\nSuccess! Your new password is #{User.find(user.id).password}!\n\n"
+            populate_show_db
+            show_search(user)
+        when 3
+            watch_show(user)
             homepage(user)
-        else
-            homepage(user)
-        end
+        when 4
+            if Show.all.empty?
+                puts "\nSearch for shows first so we can figure out your preferences!"
+                homepage(user)
+            else
+                rand_show = Show.new(title: "")
+                
+                while !(user.queue.include?(rand_show.title))
+                    rand_show_index = rand(Show.all.length)
+                    rand_show = Show.all[rand_show_index]
+                    
+                    if !(user.queue.include?(rand_show.title))
+                        puts "\nYour next exciting show will be #{rand_show.title}!\n\n"
+                        user.add_show(rand_show.title)
+                        break
+                    end
+                end
+
+                homepage(user)
+            end
+        when 5
+            acc_details(user)
+        when 6
+            puts "\t- 1 Change username\n\n"
+            puts "\t- 2 Change password\n\n"
+            puts "\t- 3 Return to homepage\n\n"
+
+            print "\nInput: "
+            case gets.chomp.to_i
+
+            when 1
+                print "\nEnter a new username: "
+                username = gets.chomp
+
+                User.find_by(id: user.id).update(username: username)
+                puts "\nSuccess! Your new username is #{User.find(user.id).username}!\n\n"
+                homepage(user)
+            when 2
+                print "\nEnter your current password: "
+                password = STDIN.noecho(&:gets).chomp
+
+                print "\nEnter a new password: "
+                password = gets.chomp
+
+                User.find_by(id: user.id).update(password: password)
+                puts "\nSuccess! Your new password is #{User.find(user.id).password}!\n\n"
+                homepage(user)
+            else
+                homepage(user)
+            end
         when 7
-        puts "\nUntil next time!\n\n"
-        openingWelcome
+            puts "\nUntil next time!\n\n"
+            openingWelcome
         else
-        homepage(user)
+            homepage(user)
         end
     end
 end
@@ -246,6 +249,7 @@ def acc_creation
     print "\nPlease enter your country of residence: "
     country = gets.chomp
     user = User.new(fullname: fullname, username: username, password: password, country: country, status: true)
+    
     if User.exists?(username: user.username)
         puts "\nThis account already exists!\n\n"
     else
@@ -286,7 +290,7 @@ def show_search(user)
         show_list = Show.sort_by_rating(rating)
 
         if show_list.empty?
-            puts "\nLooks like there are no shows with that rating!"
+            puts "\nLooks like there are no shows with that rating or higher!"
             populate_show_db
             return show_search(user)
         end
