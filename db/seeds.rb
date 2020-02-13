@@ -24,7 +24,7 @@ def find_show(string="girls")
         show = shows["show"]
 
         if show["network"] == nil && show["webChannel"]["name"] != nil && show["rating"]["average"] != nil && show["genres"].length > 0 && show["runtime"] != nil
-            puts "it hit me #{show["webChannel"]["name"]}"
+            # puts "it hit me #{show["webChannel"]["name"]}"
             tv_show = Show.find_or_create_by(title: show["name"].downcase, plot: show["summary"], rating: show["rating"]["average"], genre: show["genres"][0].downcase, network: Network.find_or_create_by(name: show["webChannel"]["name"].downcase), runtime: show["runtime"])
             
             tv_genre = Genre.find_or_create_by(genre: tv_show.genre)

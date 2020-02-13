@@ -315,7 +315,8 @@ def show_search(user)
     puts "\t- 4 Title\n\n"
     puts "\t- 5 Return to Homepage\n\n"
     puts
-    p "Current Queue: #{user.queue}"
+    print "\nCurrent Queue: "
+    pp user.queue
     print "\nFind By: "
     case gets.chomp.to_i
 
