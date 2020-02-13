@@ -4,7 +4,7 @@ require 'pp'
 require_relative '../db/seeds.rb'
 require 'io/console'
 require 'artii'
-require_relative '../terminal_test_images.rb'
+require_relative '../catpix.rb'
 
 # Creating pseudocode
 
@@ -64,7 +64,7 @@ def check_login
         print "\nPlease enter your username: "
         usernames = gets.chomp
         print "\nPlease enter your password: "
-        password = gets.chomp
+        password = STDIN.noecho(&:gets).chomp
 
         user = User.login(usernames, password)
         if user
@@ -186,7 +186,7 @@ def homepage(user)
                 change_status(user)
                 puts "\nYour account status has been successfully updated!\n\n"
                 sleep 3
-                
+
                 puts "\e[H\e[2J"
                 homepage(user)
             elsif answer == 'n'
@@ -231,8 +231,12 @@ def homepage(user)
                 homepage(user)
             end
         when 5
+            puts "\e[H\e[2J"
             acc_details(user)
         when 6
+            puts "\e[H\e[2J"
+            puts A.asciify('Manage Account')
+            puts "\n**************************************************************"
             puts "\t- 1 Change username\n\n"
             puts "\t- 2 Change password\n\n"
             puts "\t- 3 Return to homepage\n\n"
@@ -512,7 +516,7 @@ def watch_show(user)
 
         puts "\e[H\e[2J"
         watch_movie(time)
-        puts "*sniff* That one gets me everytime."
+        puts "\n\n*sniff* That one gets me everytime."
         sleep 3
 
         puts "\e[H\e[2J"
@@ -529,6 +533,7 @@ def watch_show(user)
 end
 
 def acc_details(user)
+    puts A.asciify('Account Details')
     puts "\n**************************************************************"
     # watchlist = Watchlist.where(user_id: self.id) 
     # 1 view all shows watched
@@ -549,9 +554,15 @@ def acc_details(user)
 
     when 1
         puts "\nWow, looks like you're about to waste #{user.total_runtime} minutes! Nice job!\n\n"
+        sleep 3
+
+        puts "\e[H\e[2J"
         acc_details(user)
     when 2
         puts "\nYour current queue size is #{user.queue.length}.\n\n"
+        sleep 3
+
+        puts "\e[H\e[2J"
         acc_details(user)
     when 3
         puts "\e[H\e[2J"
