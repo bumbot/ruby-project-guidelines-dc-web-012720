@@ -27,12 +27,12 @@ def openingWelcome
     puts "|  |          |   |______  ___|  |____    /   /    \\   \\      "
     puts "|__|          |__________||___________|  |___/      \\___|     "
 
-    puts "\nPress \"y\" to continue or type \"exit\" to terminate the program.\n\n\n"
-    print "Input: "
+    puts "\nPress \"y\" to continue or type \"exit\" to terminate the program.\n\n"
+    print "\nInput: "
     input = gets.chomp.downcase.gsub(" ", "")
     while input != "y" 
         if input == "exit"
-            abort "Exiting Program"
+            abort "\nExiting Program"
         end
         puts "\n**************************************************************"
         puts "An error occured please make sure you type \"y\" or \"exit\" only."
@@ -52,7 +52,7 @@ end
 def check_login
     i = 0
     while i < 3
-        puts "Please try again!"
+        puts "\nPlease try again!"
 
         print "\nPlease enter your username: "
         usernames = gets.chomp
@@ -70,7 +70,7 @@ def check_login
 end
 
 def loginMenu
-    puts "Please make a selection on the following: \n\n"
+    puts "\nPlease make a selection on the following: \n\n"
     puts "\t- 1 Log-in \n\n"
     puts "\t- 2 Create Account\n\n"
     puts "\t- 3 Exit Menu\n\n"
@@ -130,22 +130,22 @@ end
 
 def homepage(user)
     if user.status == false
-        puts "We are sorry, this service is only available to paying members. This is Debtflix, after all."
-        puts "If you would like to change your account status, press y/n"
+        puts "\nWe are sorry, this service is only available to paying members. This is Debtflix, after all.\n\n"
+        print "\nIf you would like to change your account status, press y/n: "
         input = gets.chomp.downcase
 
         if input == 'y'
             change_status(user)
             sleep 3
-            puts "Congrats! You are now a member! Redirecting..."
+            puts "\nCongrats! You are now a member! Redirecting...\n\n"
             sleep 2
             homepage(user)
         else
-            puts "Securely logging you out"
+            puts "\nSecurely logging you out\n"
             loginMenu
         end
     else
-        puts "\t- 1 Check if my account is active\n\n"
+        puts "\n\t- 1 Check if my account is active\n\n"
         puts "\t- 2 Search for show\n\n"
         puts "\t- 3 Watch a show\n\n"
         puts "\t- 4 Find a random show\n\n"
@@ -241,7 +241,7 @@ def acc_creation
     country = gets.chomp
     user = User.new(fullname: fullname, username: username, password: password, country: country, status: true)
     if User.exists?(username: user.username)
-        puts "This account already exists!"
+        puts "\nThis account already exists!\n\n"
     else
         User.create_account(fullname, username, password, country)
     end
@@ -261,7 +261,7 @@ def show_search(user)
         return homepage(user)
     end
 
-    puts "Search for show based on: \n\n"
+    puts "\nSearch for show based on: \n\n"
     puts "\t- 1 Rating\n\n"
     puts "\t- 2 Genre\n\n"
     puts "\t- 3 Network\n\n"
@@ -383,10 +383,10 @@ def acc_details(user)
         # 2 view watch time
         # 3 view size of queue
 
-    puts "Account Details:\n\n"
-    puts "  Name: #{user.fullname}\n\n"
-    puts "  Username: #{user.username}\n\n"
-    puts "  Country: #{user.country}\n\n"
+    puts "\nAccount Details:\n\n"
+    puts "  Name: #{user.fullname}"
+    puts "  Username: #{user.username}"
+    puts "  Country: #{user.country}"
     puts "  Account Status: #{user.status}\n\n"
     puts "\t- 1 View current queue runtime\n\n"
     puts "\t- 2 View size of current queue\n\n"
