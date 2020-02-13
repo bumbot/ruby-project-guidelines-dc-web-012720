@@ -106,7 +106,7 @@ def loginMenu
                 if input.downcase == "y"
                     user = acc_creation
                     if user
-                        puts "\nSuccess! Account successfully created!\n\n"
+                        puts "\nSuccess! Account successfully created! Redirecting...\n\n"
                         sleep 3
                         homepage(user)
                     else
@@ -274,8 +274,8 @@ def show_search(user)
     puts "\t- 4 Title\n\n"
     puts "\t- 5 Return to Homepage\n\n"
     puts
-    p "Current Queue: #{user.queue}."
-    print "\nWatch: "
+    p "Current Queue: #{user.queue}"
+    print "\nFind By: "
     case gets.chomp.to_i
 
     when 1
@@ -401,8 +401,10 @@ def watch_show(user)
 
     if user.queue.include?(input)
         puts "\nEnjoy your show! Grabbing some popcorn...\n\n"
+        time = (Show.find_by(title: input).runtime / 10).round
         user.remove_show(input)
-        watch_movie
+        sleep 3
+        watch_movie(time)
         homepage(user)
     else
         puts "\nLooks like that show isn't on your queue!\n\n"

@@ -21,11 +21,11 @@ def print_image(path)
 end
 
 def create_quote
-  Faker::Quote.unique.famous_last_words
+  Faker::Quote.famous_last_words
 end
 
 def food_description
-  Faker::Food.unique.description
+  Faker::Food.description
 end
 
 def movie_quote
@@ -56,22 +56,15 @@ end
 #
 #
 #
-def watch_movie
-  path = sample
-  puts ""
-  print_image(path)
-  puts random_description
-  sleep 3
 
-  path = sample
-  puts ""
-  print_image(path)
-  puts random_description
-  sleep 5
-
-  path = sample
-  puts ""
-  print_image(path)
-  puts random_description
-  puts ""
+def watch_movie(int=3)
+  i = 0
+  while i < int
+    i+=1
+    path = sample
+    puts ""
+    print_image(path)
+    puts random_description
+    sleep 3
+  end
 end
