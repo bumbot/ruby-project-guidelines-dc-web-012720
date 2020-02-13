@@ -8,10 +8,15 @@ To install Debtflix is simple and can be installed following these steps:
   2. Open the file with your favorite text editor
   3. Open your terminal and type the following
   ```
+  brew install imagemagick@6 && brew link imagemagick@6 --force
+  ```
+  4. Once the download is finished type the following
+  ```
   bundle install
+
   ruby bin/run.rb
   ```
-  4. After completing step 3 Debtflix will be up and running, enjoy.
+  4. After completing step 4 Debtflix will be up and running, enjoy.
 
 ## Using DebtFlix
 
