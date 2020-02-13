@@ -368,16 +368,22 @@ def show_search(user)
 
         print "\nPlease enter the name of the show that you would like to watch: "
         show = gets.chomp.downcase
-        temp = Show.where(title: show)
-        new_show = Watchlist.new(user_id: user.id, show_id: temp[0].id)
-        
-        if Watchlist.find_by(user_id: new_show.user_id, show_id: new_show.show_id)
-            puts "You already have that show! Returning to main menu\n\n"
-            homepage(user)
+
+        if Show.all_titles.include?(show)
+            temp = Show.where(title: show)
+            new_show = Watchlist.new(user_id: user.id, show_id: temp[0].id)
+            
+            if Watchlist.find_by(user_id: new_show.user_id, show_id: new_show.show_id)
+                puts "You already have that show! Returning to main menu\n\n"
+                homepage(user)
+            else
+                user.add_show(show)
+                puts "\nSuccess! Your show is waiting for you in your queue!\n\n"
+                homepage(user)
+            end
         else
-            user.add_show(show)
-            puts "\nSuccess! Your show is waiting for you in your queue!\n\n"
-            homepage(user)
+            puts "\nThat show does not exist!"
+            show_search(user)
         end
     when 5
         homepage(user)
