@@ -251,7 +251,7 @@ def homepage(user)
                 someone = User.find_by(id: user.id)
                 someone.username = username
                 someone.save
-                binding.pry
+
                 puts "\nSuccess! Your new username is #{User.find(user.id).username}!\n\n"
                 sleep 3
 

@@ -11,8 +11,8 @@ end
 
 def print_image(path)
   Catpix::print_image "#{path}",
-    :limit_x => 1,
-    :limit_y => 0.8,
+    :limit_x => 0.5,
+    :limit_y => 2,
     :center_x => true,
     :center_y => true,
     :bg => "black",
@@ -64,7 +64,7 @@ def watch_movie(int=3)
     path = sample
     puts ""
     print_image(path)
-    puts random_description
-    sleep 3
+    puts "\t#{random_description}"
+    sleep 5
   end
 end
