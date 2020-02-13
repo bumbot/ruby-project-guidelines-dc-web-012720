@@ -4,7 +4,7 @@ require 'faker'
 def print_image(string="pikachu.png")
   Catpix::print_image "./pics/#{string}",
     :limit_x => 1,
-    :limit_y => 1,
+    :limit_y => 0.8,
     :center_x => true,
     :center_y => true,
     :bg => "black",

@@ -4,6 +4,7 @@ require 'pp'
 require_relative '../db/seeds.rb'
 require 'io/console'
 require 'artii'
+require_relative '../terminal_test_images.rb'
 
 # Creating pseudocode
 

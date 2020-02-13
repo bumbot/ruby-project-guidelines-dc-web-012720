@@ -27,7 +27,7 @@ After members have successfully signed into the service memebers will be present
 
 ![Debtflix Create Account](/img/debtflixSearchShow.png)
 
-The search for show option will allow the memeber the ability to establish a database of shows they want to select. After the member provides their selection they will have the option to select shows by Rating, Genre, Network and, Title. Before the member has the ability to select an option the service will show the member their current watchlist of shows. After the member has given their selection they will add a specific show given on the selection.
+The search for show option will allow the member the ability to establish a database of shows they want to select. After the member provides their selection they will have the option to select shows by Rating, Genre, Network and, Title. Before the member has the ability to select an option the service will show the member their current watchlist of shows. After the member has given their selection they will add a specific show given on the selection.
 
 The watch a show option will allow the member to view a show from their watchlist. If the member's watchlist is empty the member will be notified of the issued and will be redirected to the homepage. When the member has atleast one show in their watchlist the user will have the ability to watch the first show on their watchlist. Once the memeber has finished watching their show the member will be redirected to the homepage. 
 
