@@ -9,11 +9,12 @@ require_relative '../terminal_test_images.rb'
 # Creating pseudocode
 
 # Welcome to DebtFlix
+A = Artii::Base.new
+
 def openingWelcome
     puts "\n\nWelcome to DebtFlix\n\n"
 
-    a = Artii::Base.new
-    puts a.asciify('Debtflix!')
+    puts A.asciify('Debtflix!')
 
     puts " ________        _________     ________    ________________   "
     puts "|         \\     |   ______|   |   __   \\  |_____     ______|  "
@@ -92,6 +93,7 @@ def loginMenu
         if user
             puts "\nSuccess! Redirecting to homepage...\n\n"
             sleep 3
+            puts "\e[H\e[2J"
             homepage(user)
         else
             puts ""
@@ -99,6 +101,7 @@ def loginMenu
             if user
                 puts "\nSuccess! Redirecting to homepage...\n\n"
                 sleep 3
+                puts "\e[H\e[2J"
                 homepage(user)
             else
                 print "\nWould you like to create an account? y/n: "
@@ -108,6 +111,7 @@ def loginMenu
                     if user
                         puts "\nSuccess! Account successfully created! Redirecting...\n\n"
                         sleep 3
+                        puts "\e[H\e[2J"
                         homepage(user)
                     else
                         loginMenu
@@ -122,18 +126,22 @@ def loginMenu
         if user
             puts "\nSuccess! Account successfully created! Redirecting...\n\n"
             sleep 3
+            puts "\e[H\e[2J"
             homepage(user)
         else
             loginMenu
         end
     elsif input == 3
-        abort "\nExiting program...\n\n"
+        puts "\e[H\e[2J"
+        openingWelcome
     else
         loginMenu
     end
 end 
 
 def homepage(user)
+    puts A.asciify('Debtflix!')
+    puts "\n**************************************************************"
     if user.status == false
         puts "\nWe are sorry, this service is only available to paying members. This is Debtflix, after all.\n\n"
         print "\nIf you would like to change your account status, press y/n: "
@@ -143,11 +151,13 @@ def homepage(user)
             change_status(user)
             sleep 3
             puts "\nCongrats! You are now a member! Redirecting...\n\n"
-            sleep 2
+            sleep 3
+            puts "\e[H\e[2J"
             homepage(user)
         else
             puts "\nSecurely logging you out\n"
-            sleep 2
+            sleep 3
+            puts "\e[H\e[2J"
             loginMenu
         end
     else
@@ -170,19 +180,31 @@ def homepage(user)
             if answer == "y"
                 change_status(user)
                 puts "\nYour account status has been successfully updated!\n\n"
+                
+                puts "\e[H\e[2J"
+                homepage(user)
+            elsif answer == 'n'
+                puts "\e[H\e[2J"
                 homepage(user)
             else
+                puts "\e[H\e[2J"
                 homepage(user)
             end
         when 2
+            puts "\e[H\e[2J"
+            sleep 1
             populate_show_db
+            puts "\e[H\e[2J"
             show_search(user)
         when 3
             watch_show(user)
+            puts "\e[H\e[2J"
             homepage(user)
         when 4
             if Show.all.empty?
                 puts "\nSearch for shows first so we can figure out your preferences!"
+                sleep 3
+                puts "\e[H\e[2J"
                 homepage(user)
             else
                 rand_show = Show.new(title: "")
@@ -197,7 +219,8 @@ def homepage(user)
                         break
                     end
                 end
-
+                
+                puts "\e[H\e[2J"
                 homepage(user)
             end
         when 5
@@ -216,6 +239,9 @@ def homepage(user)
 
                 User.find_by(id: user.id).update(username: username)
                 puts "\nSuccess! Your new username is #{User.find(user.id).username}!\n\n"
+                sleep 3
+
+                puts "\e[H\e[2J"
                 homepage(user)
             when 2
                 print "\nEnter your current password: "
@@ -226,20 +252,29 @@ def homepage(user)
 
                 User.find_by(id: user.id).update(password: password)
                 puts "\nSuccess! Your new password is #{User.find(user.id).password}!\n\n"
+                sleep 3
+
+                puts "\e[H\e[2J"
                 homepage(user)
             else
+                puts "\e[H\e[2J"
                 homepage(user)
             end
         when 7
             puts "\nUntil next time!\n\n"
+            sleep 3
+
+            puts "\e[H\e[2J"
             openingWelcome
         else
+            puts "\e[H\e[2J"
             homepage(user)
         end
     end
 end
 
 def acc_creation
+    puts "\n**************************************************************"
     print "\nPlease enter your full name: "
     fullname = gets.chomp
     print "\nPlease enter a unique username: "
@@ -266,6 +301,8 @@ def change_status(user)
 end
 
 def show_search(user)
+    puts A.asciify('Search')
+    puts "\n**************************************************************"
     if Show.all.empty?
         puts "\nLooks like there are no shows in your search! Try again!\n\n"
         return homepage(user)
@@ -292,6 +329,9 @@ def show_search(user)
         if show_list.empty?
             puts "\nLooks like there are no shows with that rating or higher!"
             populate_show_db
+            sleep 3
+
+            puts "\e[H\e[2J"
             return show_search(user)
         end
 
@@ -304,10 +344,16 @@ def show_search(user)
         
         if Watchlist.find_by(user_id: new_show.user_id, show_id: new_show.show_id)
             puts "You already have that show! Returning to main menu\n\n"
+            sleep 3
+
+            puts "\e[H\e[2J"
             homepage(user)
         else
             user.add_show(show)
             puts "\nSuccess! Your show is waiting for you in your queue!\n\n"
+            sleep 2
+
+            puts "\e[H\e[2J"
             homepage(user)
         end
     when 2
@@ -321,6 +367,9 @@ def show_search(user)
         if show_list.empty?
             puts "\nLooks like there are no shows with that genre!\n\n"
             populate_show_db
+            sleep 3
+
+            puts "\e[H\e[2J"
             return show_search(user)
         end
 
@@ -333,10 +382,16 @@ def show_search(user)
         
         if Watchlist.find_by(user_id: new_show.user_id, show_id: new_show.show_id)
             puts "You already have that show! Returning to main menu\n\n"
+            sleep 3
+
+            puts "\e[H\e[2J"
             homepage(user)
         else
             user.add_show(show)
             puts "\nSuccess! Your show is waiting for you in your queue!\n\n"
+            sleep 2
+
+            puts "\e[H\e[2J"
             homepage(user)
         end
     when 3
@@ -348,6 +403,9 @@ def show_search(user)
         if show_list.empty?
             puts "\nLooks like there are no shows in that network!\n"
             populate_show_db
+            sleep 3
+
+            puts "\e[H\e[2J"
             return show_search(user)
         end
 
@@ -360,10 +418,16 @@ def show_search(user)
         
         if Watchlist.find_by(user_id: new_show.user_id, show_id: new_show.show_id)
             puts "You already have that show! Returning to main menu\n\n"
+            sleep 3
+
+            puts "\e[H\e[2J"
             homepage(user)
         else
             user.add_show(show)
             puts "\nSuccess! Your show is waiting for you in your queue!\n\n"
+            sleep 2
+
+            puts "\e[H\e[2J"
             homepage(user)
         end
     when 4
@@ -379,20 +443,33 @@ def show_search(user)
             
             if Watchlist.find_by(user_id: new_show.user_id, show_id: new_show.show_id)
                 puts "You already have that show! Returning to main menu\n\n"
+                sleep 3
+
+                puts "\e[H\e[2J"
                 homepage(user)
             else
                 user.add_show(show)
                 puts "\nSuccess! Your show is waiting for you in your queue!\n\n"
+                sleep 2
+
+                puts "\e[H\e[2J"
                 homepage(user)
             end
         else
             puts "\nThat show does not exist!"
+            sleep 3
+
+            puts "\e[H\e[2J"
             show_search(user)
         end
     when 5
+        puts "\e[H\e[2J"
         homepage(user)
     else
         puts "\nTry again!\n\n"
+        sleep 3
+
+        puts "\e[H\e[2J"
         show_search(user)
     end
 end
@@ -400,6 +477,8 @@ end
 def watch_show(user)
     if user.queue.empty?
         puts "\nYour queue is empty! Search for shows to add first!\n\n"
+        sleep 3
+        puts "\e[H\e[2J"
         homepage(user)
     end
 
@@ -415,9 +494,16 @@ def watch_show(user)
         user.remove_show(input)
         sleep 3
         watch_movie(time)
+        puts "That one gets me everytime."
+        sleep 3
+
+        puts "\e[H\e[2J"
         homepage(user)
     else
         puts "\nLooks like that show isn't on your queue!\n\n"
+        sleep 3
+
+        puts "\e[H\e[2J"
         homepage(user)
     end
 
@@ -425,6 +511,7 @@ def watch_show(user)
 end
 
 def acc_details(user)
+    puts "\n**************************************************************"
     # watchlist = Watchlist.where(user_id: self.id) 
     # 1 view all shows watched
         # 2 view watch time
@@ -449,14 +536,18 @@ def acc_details(user)
         puts "\nYour current queue size is #{user.queue.length}.\n\n"
         acc_details(user)
     when 3
+        puts "\e[H\e[2J"
         homepage(user)
     else
+        puts "\e[H\e[2J"
         acc_details(user)
     end
 end
 
 def populate_show_db
-    print "\nPlease enter a search term for the show that you would like to add: "
+    puts A.asciify('Search')
+    puts "\n**************************************************************"
+    print "\nPlease enter a search term for the show that you would like to add:\n"
     search_term = gets.chomp.downcase
     find_show(search_term)
 end
