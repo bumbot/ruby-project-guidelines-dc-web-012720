@@ -450,16 +450,16 @@ def watch_show(user)
         time = (Show.find_by(title: input).runtime / 10).round
         if time == 0
             time = 1
-        else
-            user.remove_show(input)
-            sleep 5
-            puts "\e[H\e[2J"
-            watch_movie(time)
-            puts "\n\n*sniff* That one gets me everytime."
-            sleep 3
-            puts "\e[H\e[2J"
-            homepage(user)
         end
+        
+        user.remove_show(input)
+        sleep 5
+        puts "\e[H\e[2J"
+        watch_movie(time)
+        puts "\n\n*sniff* That one gets me everytime."
+        sleep 3
+        puts "\e[H\e[2J"
+        homepage(user)
     else
         puts "\nLooks like that show isn't on your queue!\n\n"
         sleep 3
