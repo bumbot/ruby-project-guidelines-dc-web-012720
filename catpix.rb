@@ -11,7 +11,7 @@ end
 
 def print_image(path)
   Catpix::print_image "#{path}",
-    :limit_x => 0.8,
+    :limit_x => 0.5,
     :limit_y => 2,
     :center_x => true,
     :center_y => true,
