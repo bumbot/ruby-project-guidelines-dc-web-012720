@@ -13,9 +13,7 @@ class User < ActiveRecord::Base
             end
         }
         networks.max_by{|k, v| v}
-
-
-    end
+     end
 
     def queue
         watchlist = Watchlist.where(user_id: self.id) 
@@ -64,8 +62,6 @@ class User < ActiveRecord::Base
     def total_runtime
         watchlist = Watchlist.where(user_id: self.id)
         all_shows = watchlist.map{|show| Show.find(show.show_id)}
-
         all_shows.sum{|show| show.runtime}
     end
-    
 end
