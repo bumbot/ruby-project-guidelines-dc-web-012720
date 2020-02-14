@@ -14,3 +14,20 @@ describe "Debtflix" do
     end
 
 end
+
+
+describe "Shows" do 
+    it "makes sure there are no shows in the database" do 
+        expect(Show.all.length).to be(0)
+    end
+
+    let(:show) {Show.find_or_create_by(title: "Breaking Bad", plot: "Man turns crazy", rating: 8.1, genre: "Drama", runtime: 45, network_id: 0)}
+    it "creates a new Show instance with the title Breaking Bad" do
+        expect(show.title).to eq("Breaking Bad")
+    end
+
+    it "updates the title of the show" do 
+        show.update(title: "Breaking Good")
+        expect(show.title).to eq("Breaking Good")
+    end
+end

@@ -5,11 +5,11 @@ old_logger = ActiveRecord::Base.logger
 ActiveRecord::Base.logger = nil
 
 User.destroy_all
-# Show.destroy_all
+Show.destroy_all
 Watchlist.destroy_all
-# Genre.destroy_all
-# ShowGenre.destroy_all
-# Network.destroy_all
+Genre.destroy_all
+ShowGenre.destroy_all
+Network.destroy_all
 
 # ann = User.find_or_create_by(fullname: "Ann", username: "annie", password:"hey", country:"USA", status: true)
 
