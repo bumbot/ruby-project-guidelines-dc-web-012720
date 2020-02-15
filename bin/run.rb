@@ -288,7 +288,9 @@ def show_search(user)
     puts A.asciify('Search')
     puts "\n**************************************************************"
     if Show.all.empty?
-        puts "\nLooks like there are no shows in your search! Try again!\n\n"
+        puts "\nLooks like there are no shows in your search! Try again in a bit!\n\n"
+        sleep 3
+        puts "\e[H\e[2J"
         return homepage(user)
     end
     puts "\nSearch for show based on: \n\n"
@@ -319,18 +321,25 @@ def show_search(user)
             print "\nPlease enter the name of the show that you would like to add: "
             show = gets.chomp.downcase
             temp = Show.where(title: show)
-            new_show = Watchlist.new(user_id: user.id, show_id: temp[0].id)
-            if Watchlist.find_by(user_id: new_show.user_id, show_id: new_show.show_id)
-                puts "You already have that show! Returning to main menu\n\n"
+            if !temp.is_a?(Show)
+                puts "\nUh oh, looks like you typed in a wrong name!"
                 sleep 3
                 puts "\e[H\e[2J"
                 homepage(user)
             else
-                user.add_show(show)
-                puts "\nSuccess! Your show is waiting for you in your queue!\n\n"
-                sleep 2
-                puts "\e[H\e[2J"
-                homepage(user)
+                new_show = Watchlist.new(user_id: user.id, show_id: temp[0].id)
+                if Watchlist.find_by(user_id: new_show.user_id, show_id: new_show.show_id)
+                    puts "You already have that show! Returning to main menu\n\n"
+                    sleep 3
+                    puts "\e[H\e[2J"
+                    homepage(user)
+                else
+                    user.add_show(show)
+                    puts "\nSuccess! Your show is waiting for you in your queue!\n\n"
+                    sleep 2
+                    puts "\e[H\e[2J"
+                    homepage(user)
+                end
             end
         else
             puts "Looks like that's not a valid rating! Redirecting to main menu..."
@@ -345,6 +354,8 @@ def show_search(user)
         show_list = Show.genre(input)
         if show_list.empty?
             puts "\nLooks like there are no shows with that genre!\n\n"
+            sleep 2
+            puts "\e[H\e[2J"
             populate_show_db
             sleep 3
             puts "\e[H\e[2J"
@@ -354,18 +365,25 @@ def show_search(user)
         print "\nPlease enter the name of the show that you would like to add: "
         show = gets.chomp.downcase
         temp = Show.where(title: show)
-        new_show = Watchlist.new(user_id: user.id, show_id: temp[0].id)
-        if Watchlist.find_by(user_id: new_show.user_id, show_id: new_show.show_id)
-            puts "You already have that show! Returning to main menu\n\n"
+        if !temp.is_a?(Show)
+            puts "\nUh oh, looks like you typed in a wrong name!"
             sleep 3
             puts "\e[H\e[2J"
             homepage(user)
         else
-            user.add_show(show)
-            puts "\nSuccess! Your show is waiting for you in your queue!\n\n"
-            sleep 2
-            puts "\e[H\e[2J"
-            homepage(user)
+            new_show = Watchlist.new(user_id: user.id, show_id: temp[0].id)
+            if Watchlist.find_by(user_id: new_show.user_id, show_id: new_show.show_id)
+                puts "You already have that show! Returning to main menu\n\n"
+                sleep 3
+                puts "\e[H\e[2J"
+                homepage(user)
+            else
+                user.add_show(show)
+                puts "\nSuccess! Your show is waiting for you in your queue!\n\n"
+                sleep 2
+                puts "\e[H\e[2J"
+                homepage(user)
+            end
         end
     when 3
         p Network.all_networks
@@ -374,6 +392,8 @@ def show_search(user)
         show_list = Show.network(input)
         if show_list.empty?
             puts "\nLooks like there are no shows in that network!\n"
+            sleep 2
+            puts "\e[H\e[2J"
             populate_show_db
             sleep 3
             puts "\e[H\e[2J"
@@ -383,18 +403,25 @@ def show_search(user)
         print "\nPlease enter the name of the show that you would like to add: "
         show = gets.chomp.downcase
         temp = Show.where(title: show)
-        new_show = Watchlist.new(user_id: user.id, show_id: temp[0].id)
-        if Watchlist.find_by(user_id: new_show.user_id, show_id: new_show.show_id)
-            puts "You already have that show! Returning to main menu\n\n"
+        if !temp.is_a?(Show)
+            puts "\nUh oh, looks like you typed in a wrong name!"
             sleep 3
             puts "\e[H\e[2J"
             homepage(user)
         else
-            user.add_show(show)
-            puts "\nSuccess! Your show is waiting for you in your queue!\n\n"
-            sleep 2
-            puts "\e[H\e[2J"
-            homepage(user)
+            new_show = Watchlist.new(user_id: user.id, show_id: temp[0].id)
+            if Watchlist.find_by(user_id: new_show.user_id, show_id: new_show.show_id)
+                puts "You already have that show! Returning to main menu\n\n"
+                sleep 3
+                puts "\e[H\e[2J"
+                homepage(user)
+            else
+                user.add_show(show)
+                puts "\nSuccess! Your show is waiting for you in your queue!\n\n"
+                sleep 2
+                puts "\e[H\e[2J"
+                homepage(user)
+            end
         end
     when 4
         print "\nHere is the current list of available shows: "

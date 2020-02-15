@@ -28,15 +28,23 @@ class Show < ActiveRecord::Base
 
     def self.genre(name)
         genre_name = Genre.find_by(genre: name)
-        join = ShowGenre.all.select{|obj| obj.genre_id == genre_name.id}
-        
-        join.map{|id| Show.find(id.show_id).title}
+        if genre_name == nil
+            return []
+        else
+            join = ShowGenre.all.select{|obj| obj.genre_id == genre_name.id}
+            
+            join.map{|id| Show.find(id.show_id).title}
+        end
     end
 
     def self.network(name)
         network = Network.find_by(name: name)
-        shows = Show.all.select{|show| show.network_id == network.id}
-        shows.map{|show| show.title}
+        if network == nil
+            return []
+        else
+            shows = Show.all.select{|show| show.network_id == network.id}
+            shows.map{|show| show.title}
+        end
     end
     
 end
